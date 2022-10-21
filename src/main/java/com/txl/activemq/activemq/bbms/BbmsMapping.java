@@ -6,6 +6,9 @@ import cn.hutool.core.text.csv.CsvData;
 import cn.hutool.core.text.csv.CsvReader;
 import cn.hutool.core.text.csv.CsvRow;
 import cn.hutool.core.text.csv.CsvUtil;
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.HashBiMap;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.io.File;
 import java.util.List;
@@ -21,7 +24,7 @@ public class BbmsMapping {
     private String cId;
 
     //1. Constructor
-    protected BbmsMapping() {
+    public BbmsMapping() {
     }
 
     protected BbmsMapping(Builder builder) {
@@ -72,7 +75,7 @@ public class BbmsMapping {
     }
 
     //5. CSV
-    public List<BbmsMapping> parseFromCSV(){
+    public List<BbmsMapping> parseToListFromCSV(){
         List<BbmsMapping> list = new CopyOnWriteArrayList<>();
         try {
             CsvReader reader = CsvUtil.getReader();
@@ -93,8 +96,33 @@ public class BbmsMapping {
         return list;
     }
 
-    public static void main(String[] args) {
+    //6. CSV
+    public HashBiMap<String,String> parseToMapFromCSV(){
+        HashBiMap<@Nullable String, @Nullable String> biMap = HashBiMap.create();
+        try {
+            CsvReader reader = CsvUtil.getReader();
+            ClassPathResource classPathResource = new ClassPathResource("/db/BoardingBridgeMappingEntry.csv");
+            File file = classPathResource.getFile();
+            CsvData csvData = reader.read(file);
+            List<CsvRow> rows = csvData.getRows();
+            for (CsvRow row : rows) {
+                String deviceId = row.get(1);
+                String cId = row.get(2);
+                biMap.put(deviceId,cId);
+            }
+        } catch (IORuntimeException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return biMap;
+    }
 
+    public static void main(String[] args) {
+        BbmsMapping bbmsMapping = new BbmsMapping();
+        List<BbmsMapping> list = bbmsMapping.parseToListFromCSV();
+        System.out.println("List: " + JSON.toJSONString(list));
+
+        HashBiMap<String, String> map = bbmsMapping.parseToMapFromCSV();
+        System.out.println("HashBiMap: " + JSON.toJSONString(map));
     }
 
 }

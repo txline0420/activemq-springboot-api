@@ -22,7 +22,9 @@ spring:
     broker-url: tcp://127.0.0.1:61616
     user: admin
     password: user*2022
-    queue-name: active.queue
     pool:
       enabled: true
       max-connections: 10
+    in-memory: false
+    packages:
+      trust-all: true

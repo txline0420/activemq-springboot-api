@@ -29,9 +29,9 @@ public class JedisConfig {
     @Value("${spring.redis.jedis.pool.min-idle}")
     private int minIdle;
 
-    @Bean
+    @Bean(name = "LocalJedisPool")
     public JedisPool jedisPool(){
-        JedisPoolConfig jedisPoolConfig=new JedisPoolConfig();
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
         jedisPoolConfig.setMinIdle(minIdle);
         jedisPoolConfig.setMaxTotal(maxActive);

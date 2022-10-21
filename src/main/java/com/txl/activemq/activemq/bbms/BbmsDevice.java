@@ -1,5 +1,7 @@
 package com.txl.activemq.activemq.bbms;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.util.List;
 
 /**
@@ -8,20 +10,28 @@ import java.util.List;
  */
 public class BbmsDevice {
     /** 设备编号 */
+    @JSONField(name = "EquipmentCode")
     private String equipmentCode;
     /** 机位编号 */
+    @JSONField(name = "StandCode")
     private String standCode;
     /** 是否在线 */
+    @JSONField(name = "IsOnline")
     private Boolean isOnline;
     /** 是否在使用 */
+    @JSONField(name = "IsInUse")
     private Boolean isInUse;
     /** 是否有故障 */
+    @JSONField(name = "HasError")
     private Boolean hasError;
     /** 设备使用时, 关键状态 */
+    @JSONField(name = "EqpRunningStatuses")
     private List<String> eqpRunningStatuses;
     /** 设备有故障时, 故障的描述 */
+    @JSONField(name = "EqpErrorStatuses")
     private List<String> eqpErrorStatuses;
     /** 上报时间 */
+    @JSONField(name = "ReportTime")
     private String reportTime;
 
     //1. Constructor
@@ -40,7 +50,7 @@ public class BbmsDevice {
     }
 
     //2. Builder
-    public static Builder create(){
+    public static Builder newBuilder(){
         return new Builder();
     }
 
@@ -109,11 +119,11 @@ public class BbmsDevice {
         this.standCode = standCode;
     }
 
-    public void setOnline(Boolean online) {
+    public void setIsOnline(Boolean online) {
         isOnline = online;
     }
 
-    public void setInUse(Boolean inUse) {
+    public void setIsInUse(Boolean inUse) {
         isInUse = inUse;
     }
 
@@ -142,11 +152,11 @@ public class BbmsDevice {
         return standCode;
     }
 
-    public Boolean getOnline() {
+    public Boolean getIsOnline() {
         return isOnline;
     }
 
-    public Boolean getInUse() {
+    public Boolean getIsInUse() {
         return isInUse;
     }
 
