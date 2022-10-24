@@ -39,7 +39,7 @@ public class ActiveMQConfig {
 
     @Bean
     public Queue queue() {
-        ActiveMQQueue activeMQQueue = new ActiveMQQueue("sms.queue");
+        ActiveMQQueue activeMQQueue = new ActiveMQQueue("bbms");
         try {
             logger.info("ActiveMQ队列服务创建成功. 推送的队列名称: [{}]",activeMQQueue.getQueueName());
         } catch (JMSException e) {
